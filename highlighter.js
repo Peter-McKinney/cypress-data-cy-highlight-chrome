@@ -61,21 +61,27 @@
 
   function highlightDataCyElements() {
     const elements = document.querySelectorAll("[data-cy]");
-    elements.forEach((el) => {
-      highlightElement(el);
-      createLabel(el);
-    });
+    if (elements?.length > 0) {
+      elements.forEach((el) => {
+        highlightElement(el);
+        createLabel(el);
+      });
 
-    setup();
+      setup();
+    }
   }
 
   function unhighlightDataCyElements() {
-    document.querySelectorAll(`.${LABEL_CLASS}`).forEach((el) => el.remove());
-    document
-      .querySelectorAll(`.${ELEMENT_CLASS}`)
-      .forEach((el) => unhighlightElement(el));
+    const elements = document.querySelectorAll(`.${LABEL_CLASS}`);
 
-    tearDown();
+    if (elements?.length > 0) {
+      elements.forEach((el) => el.remove());
+      document
+        .querySelectorAll(`.${ELEMENT_CLASS}`)
+        .forEach((el) => unhighlightElement(el));
+
+      tearDown();
+    }
   }
 
   const isHighlighted = document.body.dataset.cyHighlight === "true";
