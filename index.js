@@ -10,18 +10,26 @@ document.getElementById("toggle-btn").addEventListener("click", async () => {
 });
 
 document.getElementById("export-btn").addEventListener("click", async () => {
-  const [tab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true,
-  });
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-  [{ result }] = await chrome.scripting.executeScript({
+  await chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    function: exportDataCyTags,
-  });
+    func: () => {
+      const elements = document.querySelectorAll("[data-cy]");
+      const tags = Array.from(elements).map((el) => {
+        const tagName = el.tagName.toLowerCase();
+        const attrs = Array.from(el.attributes)
+          .filter((attr) => attr.name === "data-cy")
+          .map((attr) => `${attr.name}="${attr.value}"`)
+          .join(" ");
+        return `<${tagName} ${attrs}></${tagName}>`;
+      });
 
-  console.log(`data-cy - Exported output`);
-  console.log(output);
-  await navigator.clipboard.writeText(result);
-  console.log("copied to clipboard");
+      const joinedTags = tags.join("\n");
+      console.log("Exporting data-cy tags");
+      console.log(joinedTags);
+      navigator.clipboard.writeText(joinedTags);
+      return joinedTags;
+    },
+  });
 });
