@@ -1,0 +1,17 @@
+{
+  "name": "cypress-data-cy-highlight",
+  "description": "Highlights elements with data-cy tags",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "cypress-data-cy.png"
+  },
+  "permissions": ["scripting", "activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["styles.css"]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+.data-cy-highlight {
+  outline: 2px solid orange !important;
+}
+
+.data-cy-label-floating {
+  position: absolute;
+  background: orange;
+  color: black;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  z-index: 9999;
+  font-family: monospace;
+  pointer-events: none;
+}
