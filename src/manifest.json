@@ -1,6 +1,6 @@
 {
   "name": "cypress-data-cy-highlight",
-  "description": "Highlights elements with data-cy tags",
+  "description": "Highlights elements with data-cy attributes and displays their value. Elements can be exported to a file",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
