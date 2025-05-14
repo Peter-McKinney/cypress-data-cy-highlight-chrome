@@ -8,10 +8,10 @@
     "default_icon": "cypress-data-cy.png"
   },
   "permissions": ["scripting", "activeTab"],
-  "content_scripts": [
+  "web_accessible_resources": [
     {
-      "matches": ["<all_urls>"],
-      "css": ["styles.css"]
+      "resources": ["styles.css", "index.js"],
+      "matches": ["<all_urls>"]
     }
   ]
 }

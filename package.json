@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Peter-McKinney/cypress-data-cy-highlight-chrome#readme",
   "description": "",
   "devDependencies": {
+    "prettier": "^3.5.3",
     "serve": "^14.2.4"
   }
 }
