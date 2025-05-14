@@ -7,7 +7,7 @@
     "default_popup": "index.html",
     "default_icon": "cypress-data-cy.png"
   },
-  "permissions": ["scripting", "activeTab"],
+  "permissions": ["scripting", "activeTab", "downloads", "<all_urls>"],
   "web_accessible_resources": [
     {
       "resources": ["styles.css", "index.js"],
