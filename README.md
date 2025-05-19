@@ -19,7 +19,7 @@ Follow the instructions located at the above url. It's probably a good idea to r
 Run:
 
 ```
-npm run bundle
+npm run build
 ```
 
 This will create a zip file named `extension.zip` in the root directory of the project. This zip file can be uploaded to the chrome web store for distribution.
