@@ -2,11 +2,9 @@
 
 A chrome extension that highlights elements with the `data-cy` attribute. The element can be exported to a file for further review.
 
-
 ## Store Page:
 
 [Chrome Web Store](https://chromewebstore.google.com/detail/cypress-data-cy-highlight/oladebhfebnknclflagfihgpooccclmo?authuser=1&hl=en)
-
 
 ## Loading the unpacked plugin (not from the store)
 

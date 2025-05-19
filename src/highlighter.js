@@ -1,4 +1,4 @@
-(() => {
+window.cyDataCyHighlightElements = function (attribute) {
   const LABEL_CLASS = "data-cy-label-floating";
   const ELEMENT_CLASS = "data-cy-highlight";
 
@@ -8,7 +8,7 @@
     const label = document.createElement("div");
 
     label.className = LABEL_CLASS;
-    label.textContent = `${el.getAttribute("data-cy")}`;
+    label.textContent = `${el.getAttribute(`${attribute}`)}`;
 
     document.body.appendChild(label);
     elementToLabelMap.set(el, label);
@@ -60,7 +60,7 @@
   }
 
   function highlightDataCyElements() {
-    const elements = document.querySelectorAll("[data-cy]");
+    const elements = document.querySelectorAll(`[${attribute}]`);
     if (elements?.length > 0) {
       elements.forEach((el) => {
         highlightElement(el);
@@ -86,4 +86,4 @@
 
   const isHighlighted = document.body.dataset.cyHighlight === "true";
   toggleHighlight(isHighlighted);
-})();
+};

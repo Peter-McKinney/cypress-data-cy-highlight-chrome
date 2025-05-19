@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "serve ./.static/",
-    "build": "./bundle.sh"
+    "build": "./bundle.sh",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",

@@ -5,10 +5,16 @@
   </head>
   <body>
     <div class="data-cy-main-container">
-      <h3>Cypress data-cy Highlight</h4>
-      <div class="buttons-container">
-        <button class="btn" id="toggle-btn">Toggle Highlight</button>
-        <button class="btn" id="export-btn">Export data-cy tags</button>
+      <h3>Cypress data-cy Highlight</h3>
+      <div class="controls-container">
+        <button class="btn control" id="toggle-btn">Toggle Highlight</button>
+        <button class="btn control" id="export-btn">Export data-cy tags</button>
+        <input
+          class="control"
+          id="custom-attribute-input"
+          type="text"
+          placeholder="custom attribute"
+        />
       </div>
     </div>
     <script src="index.js"></script>
