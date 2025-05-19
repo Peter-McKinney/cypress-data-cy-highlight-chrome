@@ -1,6 +1,6 @@
 # cypress-data-cy-highlight
 
-A chrome extension that highlights elements with the `data-cy` attribute. The element can be exported to a file for further review.
+A chrome extension that highlights elements with the `data-cy` attribute. The elements can be exported to a file for further review. Data-cy is the default attribute to search for but users can enter a custom attribute to search for.
 
 ## Store Page:
 
