@@ -6,7 +6,7 @@ window.cyDataCyPanelScanner = function (attribute) {
     elements.forEach((element) => {
       const tagName = element.tagName.toLowerCase();
       const attributes = {};
-      
+
       // Collect all attributes
       for (let attr of element.attributes) {
         attributes[attr.name] = attr.value;
@@ -14,7 +14,7 @@ window.cyDataCyPanelScanner = function (attribute) {
 
       elementData.push({
         tagName,
-        attributes
+        attributes,
       });
     });
 
@@ -36,7 +36,7 @@ window.cyDataCySetupMutationObserver = function (attribute, callback) {
 
     mutations.forEach((mutation) => {
       // Check if nodes were added or removed
-      if (mutation.type === 'childList') {
+      if (mutation.type === "childList") {
         // Check added nodes
         mutation.addedNodes.forEach((node) => {
           if (node.nodeType === Node.ELEMENT_NODE) {
@@ -44,7 +44,10 @@ window.cyDataCySetupMutationObserver = function (attribute, callback) {
               shouldUpdate = true;
             }
             // Check descendants
-            if (node.querySelectorAll && node.querySelectorAll(`[${attribute}]`).length > 0) {
+            if (
+              node.querySelectorAll &&
+              node.querySelectorAll(`[${attribute}]`).length > 0
+            ) {
               shouldUpdate = true;
             }
           }
@@ -57,15 +60,21 @@ window.cyDataCySetupMutationObserver = function (attribute, callback) {
               shouldUpdate = true;
             }
             // Check descendants
-            if (node.querySelectorAll && node.querySelectorAll(`[${attribute}]`).length > 0) {
+            if (
+              node.querySelectorAll &&
+              node.querySelectorAll(`[${attribute}]`).length > 0
+            ) {
               shouldUpdate = true;
             }
           }
         });
       }
-      
+
       // Check if attributes were modified
-      if (mutation.type === 'attributes' && mutation.attributeName === attribute) {
+      if (
+        mutation.type === "attributes" &&
+        mutation.attributeName === attribute
+      ) {
         shouldUpdate = true;
       }
     });
@@ -80,7 +89,7 @@ window.cyDataCySetupMutationObserver = function (attribute, callback) {
     childList: true,
     subtree: true,
     attributes: true,
-    attributeFilter: [attribute]
+    attributeFilter: [attribute],
   });
 };
 
