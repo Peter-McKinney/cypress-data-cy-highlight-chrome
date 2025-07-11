@@ -83,11 +83,7 @@ window.cyDataCyHtmlPanel = function (attribute: string): void {
 
   function addListeners(htmlItem: HTMLDivElement, el: Element): void {
     htmlItem.addEventListener("mouseenter", () => {
-      document
-        .querySelectorAll(`.${HOVER_HIGHLIGHT_CLASS}`)
-        .forEach((highlightedEl) =>
-          highlightedEl.classList.remove(HOVER_HIGHLIGHT_CLASS),
-        );
+      removeHoverHighlights();
 
       el.classList.add(HOVER_HIGHLIGHT_CLASS);
 
@@ -108,8 +104,13 @@ window.cyDataCyHtmlPanel = function (attribute: string): void {
     });
   }
 
-  function createCloseButton(header: HTMLDivElement, panel: HTMLDivElement): void {
-    const closeBtn = header.querySelector(".data-cy-panel-close") as HTMLButtonElement;
+  function createCloseButton(
+    header: HTMLDivElement,
+    panel: HTMLDivElement,
+  ): void {
+    const closeBtn = header.querySelector(
+      ".data-cy-panel-close",
+    ) as HTMLButtonElement;
     closeBtn?.addEventListener("click", () => {
       panel.remove();
 

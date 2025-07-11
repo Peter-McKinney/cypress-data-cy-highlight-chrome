@@ -2,11 +2,6 @@
   outline: 2px solid orange !important;
 }
 
-.data-cy-hover-highlight {
-  outline: 3px solid #ff6b6b !important;
-  outline-offset: 2px !important;
-}
-
 .data-cy-label-floating {
   position: absolute;
   background: orange;
