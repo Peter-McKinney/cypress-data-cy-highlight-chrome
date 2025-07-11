@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "start": "serve ./.static/",
-    "build": "./bundle.sh",
+    "build": "npm run build:ts && ./bundle.sh",
+    "build:ts": "tsc && npm run copy-assets",
+    "copy-assets": "cp src/manifest.json src/index.html src/styles.css src/cypress-data-cy.png dist/",
     "format": "prettier --write ."
   },
   "repository": {
@@ -20,7 +22,9 @@
   "homepage": "https://github.com/Peter-McKinney/cypress-data-cy-highlight-chrome#readme",
   "description": "",
   "devDependencies": {
+    "@types/chrome": "^0.0.332",
     "prettier": "^3.5.3",
-    "serve": "^14.2.4"
+    "serve": "^14.2.4",
+    "typescript": "^5.8.3"
   }
 }
