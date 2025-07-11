@@ -1,24 +1,31 @@
 window.cyDataCyHtmlPanel = function (attribute) {
   const PANEL_ID = "data-cy-html-panel";
-  const HOVER_HIGHLIGHT_CLASS = "data-cy-hover-highlight";
+  const HOVER_HIGHLIGHT_CLASS = "data-cy-highlight";
 
-  function createPanel() {
-    // Remove existing panel if it exists
+  function getElements() {
+    const elements = document.querySelectorAll(`[${attribute}]`);
+
+    return elements;
+  }
+
+  function removeHoverHighlights() {
+    document
+      .querySelectorAll(`.${HOVER_HIGHLIGHT_CLASS}`)
+      .forEach((el) => el.classList.remove(HOVER_HIGHLIGHT_CLASS));
+  }
+
+  function removePanel() {
     const existingPanel = document.getElementById(PANEL_ID);
     if (existingPanel) {
       existingPanel.remove();
-      // Also remove any hover highlights
-      document
-        .querySelectorAll(`.${HOVER_HIGHLIGHT_CLASS}`)
-        .forEach((el) => el.classList.remove(HOVER_HIGHLIGHT_CLASS));
-      return;
+      removeHoverHighlights();
+      return true;
     }
 
-    const panel = document.createElement("div");
-    panel.id = PANEL_ID;
-    panel.className = "data-cy-html-panel";
+    return false;
+  }
 
-    // Panel header
+  function createPanelHeader() {
     const header = document.createElement("div");
     header.className = "data-cy-panel-header";
     header.innerHTML = `
@@ -26,50 +33,119 @@ window.cyDataCyHtmlPanel = function (attribute) {
       <button class="data-cy-panel-close">×</button>
     `;
 
-    // Panel content
+    return header;
+  }
+
+  function createPanelContent() {
     const content = document.createElement("div");
     content.className = "data-cy-panel-content";
 
-    // Get all elements with the specified attribute
-    const elements = document.querySelectorAll(`[${attribute}]`);
+    return content;
+  }
+
+  function createHtmlList() {
+    const htmlList = document.createElement("div");
+    htmlList.className = "data-cy-html-list";
+
+    return htmlList;
+  }
+
+  function createHtmlItem(index) {
+    const htmlItem = document.createElement("div");
+    htmlItem.className = "data-cy-html-item";
+    htmlItem.dataset.elementIndex = index;
+
+    return htmlItem;
+  }
+
+  function getAllAttributes(el) {
+    const attrs = Array.from(el.attributes)
+      .map((attr) => `${attr.name}="${attr.value}"`)
+      .join(" ");
+
+    return attrs;
+  }
+
+  function createFormattedHtml(el, attrs) {
+    const tagName = el.tagName.toLowerCase();
+    const formattedHtml = `&lt;${tagName} ${attrs}&gt;&lt;/${tagName}&gt;`;
+
+    return `<code>${formattedHtml}</code>`;
+  }
+
+  function positionLabel(el, label) {
+    const rect = el.getBoundingClientRect();
+
+    label.style.position = "absolute";
+    label.style.top = `${window.scrollY + rect.top - 20}px`;
+    label.style.left = `${window.scrollX + rect.left}px`;
+  }
+
+  function addListeners(htmlItem, el) {
+    htmlItem.addEventListener("mouseenter", () => {
+      document
+        .querySelectorAll(`.${HOVER_HIGHLIGHT_CLASS}`)
+        .forEach((highlightedEl) =>
+          highlightedEl.classList.remove(HOVER_HIGHLIGHT_CLASS),
+        );
+
+      el.classList.add(HOVER_HIGHLIGHT_CLASS);
+
+      const label = document.createElement("div");
+      label.className = "data-cy-label-floating";
+      label.textContent = el.getAttribute(attribute);
+
+      document.body.appendChild(label);
+      positionLabel(el, label);
+    });
+
+    htmlItem.addEventListener("mouseleave", () => {
+      el.classList.remove(HOVER_HIGHLIGHT_CLASS);
+
+      document.querySelectorAll(".data-cy-label-floating").forEach((label) => {
+        label.remove();
+      });
+    });
+  }
+
+  function createCloseButton(header, panel) {
+    const closeBtn = header.querySelector(".data-cy-panel-close");
+    closeBtn.addEventListener("click", () => {
+      panel.remove();
+
+      document
+        .querySelectorAll(`.${HOVER_HIGHLIGHT_CLASS}`)
+        .forEach((el) => el.classList.remove(HOVER_HIGHLIGHT_CLASS));
+    });
+  }
+
+  function createPanel() {
+    const existingPanel = removePanel();
+    if (existingPanel) {
+      return;
+    }
+
+    const panel = document.createElement("div");
+    panel.id = PANEL_ID;
+    panel.className = "data-cy-html-panel";
+
+    const header = createPanelHeader();
+    const content = createPanelContent();
+
+    const elements = getElements();
 
     if (elements.length === 0) {
       content.innerHTML = `<p>No elements found with ${attribute} attribute</p>`;
     } else {
-      // Create formatted HTML for each element
-      const htmlList = document.createElement("div");
-      htmlList.className = "data-cy-html-list";
+      const htmlList = createHtmlList();
 
       elements.forEach((el, index) => {
-        const htmlItem = document.createElement("div");
-        htmlItem.className = "data-cy-html-item";
-        htmlItem.dataset.elementIndex = index;
+        const htmlItem = createHtmlItem(index);
+        const attrs = getAllAttributes(el);
 
-        // Get all attributes of the element
-        const attrs = Array.from(el.attributes)
-          .map((attr) => `${attr.name}="${attr.value}"`)
-          .join(" ");
+        htmlItem.innerHTML = createFormattedHtml(el, attrs);
 
-        const tagName = el.tagName.toLowerCase();
-        const formattedHtml = `&lt;${tagName} ${attrs}&gt;&lt;/${tagName}&gt;`;
-
-        htmlItem.innerHTML = `<code>${formattedHtml}</code>`;
-
-        // Add hover functionality
-        htmlItem.addEventListener("mouseenter", () => {
-          // Remove previous hover highlights
-          document
-            .querySelectorAll(`.${HOVER_HIGHLIGHT_CLASS}`)
-            .forEach((highlightedEl) =>
-              highlightedEl.classList.remove(HOVER_HIGHLIGHT_CLASS),
-            );
-          // Add highlight to current element
-          el.classList.add(HOVER_HIGHLIGHT_CLASS);
-        });
-
-        htmlItem.addEventListener("mouseleave", () => {
-          el.classList.remove(HOVER_HIGHLIGHT_CLASS);
-        });
+        addListeners(htmlItem, el);
 
         htmlList.appendChild(htmlItem);
       });
@@ -80,17 +156,8 @@ window.cyDataCyHtmlPanel = function (attribute) {
     panel.appendChild(header);
     panel.appendChild(content);
 
-    // Add close functionality
-    const closeBtn = header.querySelector(".data-cy-panel-close");
-    closeBtn.addEventListener("click", () => {
-      panel.remove();
-      // Remove any hover highlights when panel is closed
-      document
-        .querySelectorAll(`.${HOVER_HIGHLIGHT_CLASS}`)
-        .forEach((el) => el.classList.remove(HOVER_HIGHLIGHT_CLASS));
-    });
+    createCloseButton(header, panel);
 
-    // Add panel to document
     document.body.appendChild(panel);
   }
 
