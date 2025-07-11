@@ -1,4 +1,4 @@
-window.cyDataCyExportElements = function (attribute) {
+window.cyDataCyExportElements = function (attribute: string): string {
   const elements = document.querySelectorAll(`[${attribute}]`);
   const tags = Array.from(elements).map((el) => {
     const tagName = el.tagName.toLowerCase();

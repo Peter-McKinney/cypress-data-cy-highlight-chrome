@@ -1,10 +1,10 @@
-window.cyDataCyHighlightElements = function (attribute) {
+window.cyDataCyHighlightElements = function (attribute: string): void {
   const LABEL_CLASS = "data-cy-label-floating";
   const ELEMENT_CLASS = "data-cy-highlight";
 
-  const elementToLabelMap = new Map();
+  const elementToLabelMap = new Map<Element, HTMLDivElement>();
 
-  function createLabel(el) {
+  function createLabel(el: Element): void {
     const label = document.createElement("div");
 
     label.className = LABEL_CLASS;
@@ -16,7 +16,7 @@ window.cyDataCyHighlightElements = function (attribute) {
     positionLabel(el, label);
   }
 
-  function positionLabel(el, label) {
+  function positionLabel(el: Element, label: HTMLDivElement): void {
     const rect = el.getBoundingClientRect();
     label.style.position = "absolute";
 
@@ -24,34 +24,34 @@ window.cyDataCyHighlightElements = function (attribute) {
     label.style.left = `${window.scrollX + rect.left}px`;
   }
 
-  function updateAllLabelPositions() {
+  function updateAllLabelPositions(): void {
     elementToLabelMap.forEach((label, el) => {
       positionLabel(el, label);
     });
   }
 
-  function highlightElement(el) {
+  function highlightElement(el: Element): void {
     el.classList.add(ELEMENT_CLASS);
   }
 
-  function unhighlightElement(el) {
+  function unhighlightElement(el: Element): void {
     el.classList.remove("data-cy-highlight");
   }
 
-  function tearDown() {
+  function tearDown(): void {
     document.body.dataset.cyHighlight = "false";
     window.removeEventListener("scroll", updateAllLabelPositions, true);
     window.removeEventListener("resize", updateAllLabelPositions);
   }
 
-  function setup() {
+  function setup(): void {
     document.body.dataset.cyHighlight = "true";
 
     window.addEventListener("scroll", updateAllLabelPositions, true);
     window.addEventListener("resize", updateAllLabelPositions);
   }
 
-  function toggleHighlight(toggleValue) {
+  function toggleHighlight(toggleValue: boolean): void {
     if (toggleValue) {
       unhighlightDataCyElements();
     } else {
@@ -59,7 +59,7 @@ window.cyDataCyHighlightElements = function (attribute) {
     }
   }
 
-  function highlightDataCyElements() {
+  function highlightDataCyElements(): void {
     const elements = document.querySelectorAll(`[${attribute}]`);
     if (elements?.length > 0) {
       elements.forEach((el) => {
@@ -71,7 +71,7 @@ window.cyDataCyHighlightElements = function (attribute) {
     }
   }
 
-  function unhighlightDataCyElements() {
+  function unhighlightDataCyElements(): void {
     const elements = document.querySelectorAll(`.${LABEL_CLASS}`);
 
     if (elements?.length > 0) {

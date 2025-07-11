@@ -1,20 +1,20 @@
-window.cyDataCyHtmlPanel = function (attribute) {
+window.cyDataCyHtmlPanel = function (attribute: string): void {
   const PANEL_ID = "data-cy-html-panel";
   const HOVER_HIGHLIGHT_CLASS = "data-cy-highlight";
 
-  function getElements() {
+  function getElements(): NodeListOf<Element> {
     const elements = document.querySelectorAll(`[${attribute}]`);
 
     return elements;
   }
 
-  function removeHoverHighlights() {
+  function removeHoverHighlights(): void {
     document
       .querySelectorAll(`.${HOVER_HIGHLIGHT_CLASS}`)
       .forEach((el) => el.classList.remove(HOVER_HIGHLIGHT_CLASS));
   }
 
-  function removePanel() {
+  function removePanel(): boolean {
     const existingPanel = document.getElementById(PANEL_ID);
     if (existingPanel) {
       existingPanel.remove();
@@ -25,7 +25,7 @@ window.cyDataCyHtmlPanel = function (attribute) {
     return false;
   }
 
-  function createPanelHeader() {
+  function createPanelHeader(): HTMLDivElement {
     const header = document.createElement("div");
     header.className = "data-cy-panel-header";
     header.innerHTML = `
@@ -36,29 +36,29 @@ window.cyDataCyHtmlPanel = function (attribute) {
     return header;
   }
 
-  function createPanelContent() {
+  function createPanelContent(): HTMLDivElement {
     const content = document.createElement("div");
     content.className = "data-cy-panel-content";
 
     return content;
   }
 
-  function createHtmlList() {
+  function createHtmlList(): HTMLDivElement {
     const htmlList = document.createElement("div");
     htmlList.className = "data-cy-html-list";
 
     return htmlList;
   }
 
-  function createHtmlItem(index) {
+  function createHtmlItem(index: number): HTMLDivElement {
     const htmlItem = document.createElement("div");
     htmlItem.className = "data-cy-html-item";
-    htmlItem.dataset.elementIndex = index;
+    htmlItem.dataset.elementIndex = index.toString();
 
     return htmlItem;
   }
 
-  function getAllAttributes(el) {
+  function getAllAttributes(el: Element): string {
     const attrs = Array.from(el.attributes)
       .map((attr) => `${attr.name}="${attr.value}"`)
       .join(" ");
@@ -66,14 +66,14 @@ window.cyDataCyHtmlPanel = function (attribute) {
     return attrs;
   }
 
-  function createFormattedHtml(el, attrs) {
+  function createFormattedHtml(el: Element, attrs: string): string {
     const tagName = el.tagName.toLowerCase();
     const formattedHtml = `&lt;${tagName} ${attrs}&gt;&lt;/${tagName}&gt;`;
 
     return `<code>${formattedHtml}</code>`;
   }
 
-  function positionLabel(el, label) {
+  function positionLabel(el: Element, label: HTMLDivElement): void {
     const rect = el.getBoundingClientRect();
 
     label.style.position = "absolute";
@@ -81,13 +81,9 @@ window.cyDataCyHtmlPanel = function (attribute) {
     label.style.left = `${window.scrollX + rect.left}px`;
   }
 
-  function addListeners(htmlItem, el) {
+  function addListeners(htmlItem: HTMLDivElement, el: Element): void {
     htmlItem.addEventListener("mouseenter", () => {
-      document
-        .querySelectorAll(`.${HOVER_HIGHLIGHT_CLASS}`)
-        .forEach((highlightedEl) =>
-          highlightedEl.classList.remove(HOVER_HIGHLIGHT_CLASS),
-        );
+      removeHoverHighlights();
 
       el.classList.add(HOVER_HIGHLIGHT_CLASS);
 
@@ -108,9 +104,14 @@ window.cyDataCyHtmlPanel = function (attribute) {
     });
   }
 
-  function createCloseButton(header, panel) {
-    const closeBtn = header.querySelector(".data-cy-panel-close");
-    closeBtn.addEventListener("click", () => {
+  function createCloseButton(
+    header: HTMLDivElement,
+    panel: HTMLDivElement,
+  ): void {
+    const closeBtn = header.querySelector(
+      ".data-cy-panel-close",
+    ) as HTMLButtonElement;
+    closeBtn?.addEventListener("click", () => {
       panel.remove();
 
       document
@@ -119,7 +120,7 @@ window.cyDataCyHtmlPanel = function (attribute) {
     });
   }
 
-  function createPanel() {
+  function createPanel(): void {
     const existingPanel = removePanel();
     if (existingPanel) {
       return;

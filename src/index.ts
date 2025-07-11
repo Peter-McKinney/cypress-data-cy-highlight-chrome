@@ -1,12 +1,14 @@
-function getAttributeValue() {
-  const inputValue = document.getElementById("custom-attribute-input")?.value;
+function getAttributeValue(): string {
+  const inputValue = (
+    document.getElementById("custom-attribute-input") as HTMLInputElement
+  )?.value;
 
   const attributeValue = inputValue || "data-cy";
 
   return attributeValue;
 }
 
-function exportFile(tagsOutput) {
+function exportFile(tagsOutput: string): void {
   const blob = new Blob([tagsOutput], { type: "text/html" });
   const url = URL.createObjectURL(blob);
   const filename = "data-cy-tags.html";
@@ -18,11 +20,13 @@ function exportFile(tagsOutput) {
   });
 }
 
-document.getElementById("toggle-btn").addEventListener("click", async () => {
+document.getElementById("toggle-btn")?.addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({
     active: true,
     currentWindow: true,
   });
+
+  if (!tab.id) return;
 
   await chrome.scripting.insertCSS({
     target: { tabId: tab.id },
@@ -36,15 +40,17 @@ document.getElementById("toggle-btn").addEventListener("click", async () => {
 
   await chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    func: (attribute) => {
+    func: (attribute: string) => {
       window.cyDataCyHighlightElements(attribute);
     },
     args: [getAttributeValue()],
   });
 });
 
-document.getElementById("export-btn").addEventListener("click", async () => {
+document.getElementById("export-btn")?.addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  if (!tab.id) return;
 
   await chrome.scripting.executeScript({
     target: { tabId: tab.id },
@@ -53,22 +59,26 @@ document.getElementById("export-btn").addEventListener("click", async () => {
 
   const [{ result: tagsOutput }] = await chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    func: (attribute) => {
+    func: (attribute: string) => {
       return window.cyDataCyExportElements(attribute);
     },
     args: [getAttributeValue()],
   });
 
-  exportFile(tagsOutput);
+  if (tagsOutput) {
+    exportFile(tagsOutput);
+  }
 });
 
 document
   .getElementById("html-panel-btn")
-  .addEventListener("click", async () => {
+  ?.addEventListener("click", async () => {
     const [tab] = await chrome.tabs.query({
       active: true,
       currentWindow: true,
     });
+
+    if (!tab.id) return;
 
     await chrome.scripting.insertCSS({
       target: { tabId: tab.id },
@@ -82,7 +92,7 @@ document
 
     await chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      func: (attribute) => {
+      func: (attribute: string) => {
         window.cyDataCyHtmlPanel(attribute);
       },
       args: [getAttributeValue()],

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-zip -r "extension.zip" ./src/*
+zip -r "extension.zip" ./dist/*
