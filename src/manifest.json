@@ -10,7 +10,7 @@
   "permissions": ["scripting", "activeTab", "downloads"],
   "web_accessible_resources": [
     {
-      "resources": ["styles.css", "index.js"],
+      "resources": ["styles.css", "index.js", "panel-scanner.js"],
       "matches": ["<all_urls>"]
     }
   ]
