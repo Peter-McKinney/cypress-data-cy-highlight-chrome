@@ -1,7 +1,8 @@
 # cypress-data-cy-highlight
 
 <img width="317" height="319" alt="image" src="https://github.com/user-attachments/assets/eb30f901-c672-48af-8ccf-a8ff56c5ac48" />
-<img width="404" height="259" alt="image" src="https://github.com/user-attachments/assets/6cc5c5ca-fcb8-4f68-bff4-2f662351cfa6" />
+<img width="400" height="259" alt="image" src="https://github.com/user-attachments/assets/ac5aeef8-043d-4d4f-ae8d-d654b4906ed7" />
+
 
 
 
