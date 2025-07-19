@@ -34,8 +34,11 @@ The plugin uses https://github.com/vercel/serve to host a sample site for testin
 
 In the address bar of chrome, navigate to: chrome://extensions/.
 Click on "Load Unpacked"
+
 <img width="167" height="104" alt="image" src="https://github.com/user-attachments/assets/cc625eb6-517b-4df9-a4bc-344f686d80a6" />
+
 Select the `dist` folder which includes all the unpacked javascript resources.
+
 <img width="484" height="251" alt="image" src="https://github.com/user-attachments/assets/3b510950-5f7f-4583-a5f0-88de8ff5cf9b" />
 
 Open your chrome extension menu and interact with the cypress-data-cy-highlight extension. 
