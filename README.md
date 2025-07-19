@@ -1,5 +1,10 @@
 # cypress-data-cy-highlight
 
+<img width="317" height="319" alt="image" src="https://github.com/user-attachments/assets/eb30f901-c672-48af-8ccf-a8ff56c5ac48" />
+
+<img width="404" height="262" alt="image" src="https://github.com/user-attachments/assets/5189fb2b-7fbf-4b6e-bf0e-7c2700f496de" />
+
+
 A chrome extension that highlights elements with the `data-cy` attribute. The elements can be exported to a file for further review. Data-cy is the default attribute to search for but users can enter a custom attribute to search for.
 
 ## Store Page:
